@@ -18,12 +18,6 @@ df_hold_modified = df_hold.iloc[1:]
 print(df_hold_modified)
 labels = df_hold_modified['Geographic indication']
 sizes = df_hold_modified['Number of holdings']
-
-# Créez un camembert en utilisant matplotlib
 plt.pie(sizes, labels=labels, autopct='%1.1f%%', startangle=90)
-
-# Ajoutez un titre
 plt.title('Répartition géographique des exploitations')
-
-# Affichez le camembert
 plt.show()
