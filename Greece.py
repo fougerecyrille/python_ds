@@ -12,3 +12,4 @@ df_hold = pd.read_excel(excel_file_path, sheet_name=ttl_hold_nb, engine='openpyx
 print(df_hold)
 
 #Essais git sur VSCode
+#Distinction entre commit et Push
