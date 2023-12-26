@@ -33,7 +33,7 @@ df_area = df_area[df_area['Used agricultural area (ha)'] !=0]
 plt.bar(df_area['Geographic indication'],df_area['Used agricultural area (ha)'])
 plt.xlabel('Geographic indication')
 plt.ylabel('Used agricultural area (ha)')
-plt.title('Used Agricultural Area in Greece by NUTS2 Regions')
+plt.title('Used Agricultural Area in Spain by NUTS2 Regions')
 
 #Trying the scientific notation to make it easier to read the bar chart
 for i, value in enumerate(df_area['Used agricultural area (ha)']):
@@ -50,6 +50,9 @@ df_output = pd.read_excel(excel_file_path, sheet_name=econ_output, engine='openp
 
 #Eliminating the rows corresponding to the Spanish cities of Ceuta and Melilla, situated in Northen Morocco
 df_output = df_output[df_output['Standard output (euros)'] !=0]
+
+#Trying a descending order ranking for better understanding of the following bar chart
+df_output = df_output.sort_values(by='Standard output (euros)', ascending=False)
 
 #Drawing a bar chart according to these data
 plt.bar(df_output['Geographic indication'],df_output['Standard output (euros)'])
@@ -125,5 +128,5 @@ print(farming_type_unique)
 # Draw the corresponding pie chart
 plt.figure(figsize=(8, 8))
 plt.pie(farming_type_unique['all_nb_holdings'], labels=farming_type_unique['farmtype'], autopct='%1.1f%%', startangle=90)
-plt.title('Repartition of Farm Types in Greece')
+plt.title('Repartition of Farm Types in Spain')
 plt.show()
