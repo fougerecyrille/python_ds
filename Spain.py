@@ -9,12 +9,33 @@ by number of holdings and European NUTS2 regions"""
 excel_file_path = "/Users/cyrillefougere/Desktop/ENSAE 2023:2024/S1/Python et Data Science/Databases/Key farm indicators_Spain_NUTS2.xlsx"
 ttl_hold_nb = "Sheet 1"  
 df_hold = pd.read_excel(excel_file_path, sheet_name=ttl_hold_nb, engine='openpyxl')
-print(df_hold)
+
+#Eliminating the rows corresponding to the Spanish cities of Ceuta and Melilla, situated in Northen Morocco
+df_hold=df_hold[df_hold['Number of holdings'] !=0]
 
 # Drawing a pie chart according to these data
-
 labels = df_hold['Geographic indication']
 sizes = df_hold['Number of holdings']
 plt.pie(sizes, labels=labels, autopct='%1.1f%%')
 plt.title('Geographic Repartition of the Agricultural Holdings in Spain')
 plt.show()
+
+"""2. Drawing a bar chart illustrating the total used agricultural area in Greece, by ha. and European NUTS2 regions"""
+
+excel_file_path = "/Users/cyrillefougere/Desktop/ENSAE 2023:2024/S1/Python et Data Science/Databases/Key farm indicators_Spain_NUTS2.xlsx"
+ttl_area_ha = "Sheet 4"  
+df_area = pd.read_excel(excel_file_path, sheet_name=ttl_area_ha, engine='openpyxl')
+
+#Eliminating the rows corresponding to the Spanish cities of Ceuta and Melilla, situated in Northen Morocco
+df_area = df_area[df_area['Used agricultural area (ha)'] !=0]
+
+# Drawing a bar chart according to these data
+plt.bar(df_area['Geographic indication'],df_area['Used agricultural area (ha)'])
+plt.xlabel('Geographic indication')
+plt.ylabel('Used agricultural area (ha)')
+plt.title('Used Agricultural Area in Greece by NUTS2 Regions')
+for i, value in enumerate(df_area['Used agricultural area (ha)']):
+    plt.text(i, value + 0.1, str(value), ha='center', va='bottom', rotation=45)
+plt.xticks(rotation=45, ha='right')
+plt.show()
+
