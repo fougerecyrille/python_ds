@@ -75,32 +75,34 @@ farming_type.drop(columns=[f'nb_holdings_by_type_{farm_type}' for farm_type in d
 
 #Replacing the 'farmtype' labels with new values using a dictionnary :
 nomenclature_dic = {
-    "FT15_SO" : "Specialist cereals, oilseed and protein crops"
-    "FT16_SO" : "General field cropping"
-    "FT21_SO" : "Specialist horticulture indoor"
-    "FT22_SO" :
-    "FT23_SO" :
-    "FT35_SO" :
-    "FT36_SO" :
-    "FT37_SO" :
-    "FT38_SO" :
-    "FT45_SO" :
-    "FT46_SO" :
-    "FT47_SO" :
-    "FT48_SO" :
-    "FT51_SO" :
-    "FT52_SO" :
-    "FT53_SO" :
-    "FT61_SO" :
-    "FT73_SO" :
-    "FT74_SO" :
-    "FT83_SO" :
-    "FT84_SO" :
-    "FT90_SO" :
+    "FT15_SO" : "Specialist cereals, oilseed and protein crops",
+    "FT16_SO" : "General field cropping",
+    "FT21_SO" : "Specialist horticulture indoor",
+    "FT22_SO" : "Specialist horticulture outdoor",
+    "FT23_SO" : "Other horticulture",
+    "FT35_SO" : "Specialist vineyards",
+    "FT36_SO" : "Specialist fruit and citrus fruits",
+    "FT37_SO" : "Specialist olives",
+    "FT38_SO" : "Various permanent crops combined",
+    "FT45_SO" : "Specialist dairying",
+    "FT46_SO" : "Specialist cattle-rearing and fattening",
+    "FT47_SO" : "Cattle-dayring, rearing and fattening combined",
+    "FT48_SO" : "Sheep, goats and other grazing livestock",
+    "FT51_SO" : "Specialist pigs",
+    "FT52_SO" : "Specialist poultry",
+    "FT53_SO" : "Various granivores combined",
+    "FT61_SO" : "Mixed cropping",
+    "FT73_SO" : "Mixed livestock, mainly grazing livestock",
+    "FT74_SO" : "Mixed livestock, mainly granivores",
+    "FT83_SO" : "Field crops-grazing livestock combined",
+    "FT84_SO" : "Various crops and livestock combined",
+    "FT90_SO" : "Non-classified farms"
 }
+farming_type_unique = farming_type[['farmtype', 'all_nb_holdings']].drop_duplicates()
+farming_type_unique['farmtype'] = farming_type_unique['farmtype'].replace(nomenclature_dic)
+print(farming_type_unique)
 
 #Drawing the corresponding pie chart
-farming_type_unique = farming_type[['farmtype', 'all_nb_holdings']].drop_duplicates()
 plt.figure(figsize=(8, 8))
 plt.pie(farming_type_unique['all_nb_holdings'], labels=farming_type_unique['farmtype'], autopct='%1.1f%%', startangle=90)
 plt.title('Repartition of Farm Types in Greece')
