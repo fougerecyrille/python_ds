@@ -108,3 +108,23 @@ plt.pie(farming_type_unique['all_nb_holdings'], labels=farming_type_unique['farm
 plt.title('Repartition of Farm Types in Greece')
 plt.show()
 
+"""4. Drawing a bar chart illustrating the standard economic output, 
+in euros, of agriculture, of every Greek region"""
+
+excel_file_path = "/Users/cyrillefougere/Desktop/ENSAE 2023:2024/S1/Python et Data Science/Databases/Key farm indicators_Greece_NUTS2.xlsx"
+econ_output = "Sheet 5"  
+df_output = pd.read_excel(excel_file_path, sheet_name=econ_output, engine='openpyxl')
+
+# Replacing '(NUTS 2010)' with an empty string in 'Geographic indication'
+df_output['Geographic indication'] = df_output['Geographic indication'].str.replace(' (NUTS 2010)', '')
+print(df_output)
+
+# Drawing a bar chart according to these data
+plt.bar(df_output['Geographic indication'],df_output['Standard economic output (euros)'])
+plt.xlabel('Geographic indication')
+plt.ylabel('Standard economic output (euros)')
+plt.title('Standard Agricultural economic output by NUTS2 Regions')
+plt.xticks(rotation=45, ha='right')
+for i, value in enumerate(df_output['Standard economic output (euros)']):
+    plt.text(i, value + 10000, str(value), ha='center', va='bottom', rotation=45)
+plt.show()
