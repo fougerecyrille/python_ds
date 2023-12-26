@@ -50,13 +50,25 @@ csv_file = '/Users/cyrillefougere/Desktop/ENSAE 2023:2024/S1/Python et Data Scie
 # Read the CSV file into a pandas DataFrame
 farming_type = pd.read_csv(csv_file)
 
-# Display the first few rows of the DataFrame
+"""# Display the first few rows of the DataFrame
+print(farming_type.head(50))"""
+
+# Getting the number of types of farms in the dataset
+nb_types = farming_type['farmtype'].nunique()
+print("There were", nb_types, "different types of farms in Greece in 2010")
+
+# Getting a list of strings containing the different values of farmtypes in this dataset
+diff_types = farming_type['farmtype'].unique().tolist()
+print("The different values of farm types according to the European nomenclature are:", diff_types)
+
+# Create a new column for each farm type and calculate the sum of OBS_VALUE for each TIME_PERIOD
+for farm_type in diff_types:
+    farming_type[f'nb_holdings_by_type_{farm_type}'] = farming_type.loc[farming_type['farmtype'] == farm_type].groupby('TIME_PERIOD')['OBS_VALUE'].transform('sum')
+
+# Concatenate all the new columns into a single column
+farming_type['all_nb_holdings'] = farming_type.apply(lambda row: row.filter(like='nb_holdings_by_type_').sum(), axis=1)
+
+# Drop the individual farm type columns if needed
+farming_type.drop(columns=[f'nb_holdings_by_type_{farm_type}' for farm_type in diff_types], inplace=True)
+
 print(farming_type.head(50))
-
-# Specify the condition (e.g., Department is 'HR')
-type = 'FT15_SO'
-
-farming_type['C, 0, P'] = farming_type.loc[farming_type['farmtype'] == type, 'OBS_VALUE'].groupby(farming_type['TIME_PERIOD']).transform('sum')
-
-# Display the result
-print(farming_type)
