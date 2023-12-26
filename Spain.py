@@ -3,59 +3,77 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import pynsee.download
 
-"""1. Drawing a pie chart illustrating the geographic repartition of the agricultural holdings in Greece,
+"""1. Drawing a pie chart illustrating the geographic repartition of the agricultural holdings in Spain,
 by number of holdings and European NUTS2 regions"""
 
-excel_file_path = "/Users/cyrillefougere/Desktop/ENSAE 2023:2024/S1/Python et Data Science/Databases/Key farm indicators_Greece_NUTS2.xlsx"
+excel_file_path = "/Users/cyrillefougere/Desktop/ENSAE 2023:2024/S1/Python et Data Science/Databases/Key farm indicators_Spain_NUTS2.xlsx"
 ttl_hold_nb = "Sheet 1"  
 df_hold = pd.read_excel(excel_file_path, sheet_name=ttl_hold_nb, engine='openpyxl')
 
-# Replacing '(NUTS 2010)' with an empty string in 'Geographic indication'
-df_hold['Geographic indication'] = df_hold['Geographic indication'].str.replace(' (NUTS 2010)', '')
-print(df_hold)
+#Eliminating the rows corresponding to the Spanish cities of Ceuta and Melilla, situated in Northen Morocco
+df_hold=df_hold[df_hold['Number of holdings'] !=0]
 
 # Drawing a pie chart according to these data
-df_hold_modified = df_hold.iloc[1:]
-print(df_hold_modified)
-labels = df_hold_modified['Geographic indication']
-sizes = df_hold_modified['Number of holdings']
+labels = df_hold['Geographic indication']
+sizes = df_hold['Number of holdings']
 plt.pie(sizes, labels=labels, autopct='%1.1f%%')
-plt.title('Répartition géographique des exploitations')
+plt.title('Geographic Repartition of the Agricultural Holdings in Spain')
 plt.show()
 
-"""2. Drawing a bar chart illustrating the total used agricultural area in Greece, by ha. and European NUTS2 regions"""
+"""2. Drawing a bar chart illustrating the total used agricultural area in Spain, by ha. and European NUTS2 regions"""
 
-excel_file_path = "/Users/cyrillefougere/Desktop/ENSAE 2023:2024/S1/Python et Data Science/Databases/Key farm indicators_Greece_NUTS2.xlsx"
-ttl_area_ha = "Sheet 2"  
+excel_file_path = "/Users/cyrillefougere/Desktop/ENSAE 2023:2024/S1/Python et Data Science/Databases/Key farm indicators_Spain_NUTS2.xlsx"
+ttl_area_ha = "Sheet 4"  
 df_area = pd.read_excel(excel_file_path, sheet_name=ttl_area_ha, engine='openpyxl')
 
-# Replacing '(NUTS 2010)' with an empty string in 'Geographic indication'
-df_area['Geographic indication'] = df_area['Geographic indication'].str.replace(' (NUTS 2010)', '')
-print(df_area)
+#Eliminating the rows corresponding to the Spanish cities of Ceuta and Melilla, situated in Northen Morocco
+df_area = df_area[df_area['Used agricultural area (ha)'] !=0]
 
 # Drawing a bar chart according to these data
 plt.bar(df_area['Geographic indication'],df_area['Used agricultural area (ha)'])
 plt.xlabel('Geographic indication')
 plt.ylabel('Used agricultural area (ha)')
 plt.title('Used Agricultural Area in Greece by NUTS2 Regions')
+#Trying the scientific notation to make it easier to read the bar chart
 for i, value in enumerate(df_area['Used agricultural area (ha)']):
-    plt.text(i, value + 0.1, str(value), ha='center', va='bottom', rotation=45)
+    plt.text(i, value + 10000, '{:.2e}'.format(value), ha='center', va='bottom', rotation=90)
 plt.xticks(rotation=45, ha='right')
 plt.show()
 
-"""3. Drawing a pie chart on the main farming type by NUTS2 regions in Greece"""
+"""3. Drawing a bar chart illustrating the standard economic output, 
+in euros, of agriculture, of every Spanish region"""
 
-csv_file = '/Users/cyrillefougere/Desktop/ENSAE 2023:2024/S1/Python et Data Science/Databases/Greece_Type of farming.csv'
+excel_file_path = "/Users/cyrillefougere/Desktop/ENSAE 2023:2024/S1/Python et Data Science/Databases/Key farm indicators_Spain_NUTS2.xlsx"
+econ_output = "Sheet 7"  
+df_output = pd.read_excel(excel_file_path, sheet_name=econ_output, engine='openpyxl')
+
+#Eliminating the rows corresponding to the Spanish cities of Ceuta and Melilla, situated in Northen Morocco
+df_output = df_output[df_output['Standard output (euros)'] !=0]
+
+#Drawing a bar chart according to these data
+plt.bar(df_output['Geographic indication'],df_output['Standard output (euros)'])
+plt.xlabel('Geographic indication')
+plt.ylabel('Standard output (euros)')
+plt.title('Standard Agricultural economic output by NUTS2 Regions')
+plt.xticks(rotation=45, ha='right')
+#Trying the scientific notation to make it easier to read the bar chart
+for i, value in enumerate(df_output['Standard output (euros)']):
+    plt.text(i, value + 10000, '{:.2e}'.format(value), ha='center', va='bottom', rotation=90)
+plt.show()
+
+"""4. Drawing a pie chart on the main farming type by NUTS2 regions in Spain"""
+
+csv_file = '/Users/cyrillefougere/Desktop/ENSAE 2023:2024/S1/Python et Data Science/Databases/Spain_Type of farming.csv'
 
 # Read the CSV file into a pandas DataFrame
 farming_type = pd.read_csv(csv_file)
 
-"""# Display the first few rows of the DataFrame
-print(farming_type.head(50))"""
+# Display the first few rows of the DataFrame
+print(farming_type.head(50))
 
 # Getting the number of types of farms in the dataset
 nb_types = farming_type['farmtype'].nunique()
-print("There were", nb_types, "different types of farms in Greece in 2010")
+print("There were", nb_types, "different types of farms in Spain in 2010")
 
 # Getting a list of strings containing the different values of farmtypes in this dataset
 diff_types = farming_type['farmtype'].unique().tolist()
@@ -106,25 +124,4 @@ print(farming_type_unique)
 plt.figure(figsize=(8, 8))
 plt.pie(farming_type_unique['all_nb_holdings'], labels=farming_type_unique['farmtype'], autopct='%1.1f%%', startangle=90)
 plt.title('Repartition of Farm Types in Greece')
-plt.show()
-
-"""4. Drawing a bar chart illustrating the standard economic output, 
-in euros, of agriculture, of every Greek region"""
-
-excel_file_path = "/Users/cyrillefougere/Desktop/ENSAE 2023:2024/S1/Python et Data Science/Databases/Key farm indicators_Greece_NUTS2.xlsx"
-econ_output = "Sheet 5"  
-df_output = pd.read_excel(excel_file_path, sheet_name=econ_output, engine='openpyxl')
-
-# Replacing '(NUTS 2010)' with an empty string in 'Geographic indication'
-df_output['Geographic indication'] = df_output['Geographic indication'].str.replace(' (NUTS 2010)', '')
-print(df_output)
-
-# Drawing a bar chart according to these data
-plt.bar(df_output['Geographic indication'],df_output['Standard economic output (euros)'])
-plt.xlabel('Geographic indication')
-plt.ylabel('Standard economic output (euros)')
-plt.title('Standard Agricultural economic output by NUTS2 Regions')
-plt.xticks(rotation=45, ha='right')
-for i, value in enumerate(df_output['Standard economic output (euros)']):
-    plt.text(i, value + 10000, str(value), ha='center', va='bottom', rotation=45)
 plt.show()
