@@ -68,7 +68,14 @@ for farm_type in diff_types:
 # Concatenate all the new columns into a single column
 farming_type['all_nb_holdings'] = farming_type.apply(lambda row: row.filter(like='nb_holdings_by_type_').sum(), axis=1)
 
-# Drop the individual farm type columns if needed
+# Drop the individual farm type columns
 farming_type.drop(columns=[f'nb_holdings_by_type_{farm_type}' for farm_type in diff_types], inplace=True)
 
 print(farming_type.head(50))
+
+#Drawing the corresponding pie chart
+farming_type_unique = farming_type[['farmtype', 'all_nb_holdings']].drop_duplicates()
+plt.figure(figsize=(8, 8))
+plt.pie(farming_type_unique['all_nb_holdings'], labels=farming_type_unique['farmtype'], autopct='%1.1f%%', startangle=90)
+plt.title('Repartition of Farm Types in Greece')
+plt.show()
