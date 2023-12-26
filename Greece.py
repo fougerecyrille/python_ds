@@ -38,8 +38,10 @@ plt.bar(df_area['Geographic indication'],df_area['Used agricultural area (ha)'])
 plt.xlabel('Geographic indication')
 plt.ylabel('Used agricultural area (ha)')
 plt.title('Used Agricultural Area in Greece by NUTS2 Regions')
+
+#Trying the scientific notation to make it easier to read the bar chart
 for i, value in enumerate(df_area['Used agricultural area (ha)']):
-    plt.text(i, value + 0.1, str(value), ha='center', va='bottom', rotation=45)
+    plt.text(i, value + 10000, '{:.2e}'.format(value), ha='center', va='bottom', rotation=90)
 plt.xticks(rotation=45, ha='right')
 plt.show()
 
@@ -53,11 +55,11 @@ farming_type = pd.read_csv(csv_file)
 """# Display the first few rows of the DataFrame
 print(farming_type.head(50))"""
 
-# Getting the number of types of farms in the dataset
+# Get the number of types of farms in the dataset
 nb_types = farming_type['farmtype'].nunique()
 print("There were", nb_types, "different types of farms in Greece in 2010")
 
-# Getting a list of strings containing the different values of farmtypes in this dataset
+# Get a list of strings containing the different values of farmtypes in this dataset
 diff_types = farming_type['farmtype'].unique().tolist()
 print("The different values of farm types according to the European nomenclature are:", diff_types)
 
@@ -73,7 +75,7 @@ farming_type.drop(columns=[f'nb_holdings_by_type_{farm_type}' for farm_type in d
 
 #print(farming_type.head(50))
 
-#Replacing the 'farmtype' labels with new values using a dictionnary :
+# Replace the 'farmtype' labels with new values using a dictionnary :
 nomenclature_dic = {
     "FT15_SO" : "Specialist cereals, oilseed and protein crops",
     "FT16_SO" : "General field cropping",
@@ -102,7 +104,7 @@ farming_type_unique = farming_type[['farmtype', 'all_nb_holdings']].drop_duplica
 farming_type_unique['farmtype'] = farming_type_unique['farmtype'].replace(nomenclature_dic)
 print(farming_type_unique)
 
-#Drawing the corresponding pie chart
+# Draw the corresponding pie chart
 plt.figure(figsize=(8, 8))
 plt.pie(farming_type_unique['all_nb_holdings'], labels=farming_type_unique['farmtype'], autopct='%1.1f%%', startangle=90)
 plt.title('Repartition of Farm Types in Greece')
@@ -125,6 +127,8 @@ plt.xlabel('Geographic indication')
 plt.ylabel('Standard economic output (euros)')
 plt.title('Standard Agricultural economic output by NUTS2 Regions')
 plt.xticks(rotation=45, ha='right')
+
+#Trying the scientific notation to make it easier to read the bar chart
 for i, value in enumerate(df_output['Standard economic output (euros)']):
-    plt.text(i, value + 10000, str(value), ha='center', va='bottom', rotation=45)
+    plt.text(i, value + 10000, '{:.2e}'.format(value), ha='center', va='bottom', rotation=90)
 plt.show()
