@@ -42,3 +42,21 @@ for i, value in enumerate(df_area['Used agricultural area (ha)']):
     plt.text(i, value + 0.1, str(value), ha='center', va='bottom', rotation=45)
 plt.xticks(rotation=45, ha='right')
 plt.show()
+
+"""3. Trying to get statistics on the main farming type by NUTS2 regions in Greece"""
+
+csv_file = '/Users/cyrillefougere/Desktop/ENSAE 2023:2024/S1/Python et Data Science/Databases/Greece_Type of farming.csv'
+
+# Read the CSV file into a pandas DataFrame
+farming_type = pd.read_csv(csv_file)
+
+# Display the first few rows of the DataFrame
+print(farming_type.head(50))
+
+# Specify the condition (e.g., Department is 'HR')
+type = 'FT15_SO'
+
+farming_type['C, 0, P'] = farming_type.loc[farming_type['farmtype'] == type, 'OBS_VALUE'].groupby(farming_type['TIME_PERIOD']).transform('sum')
+
+# Display the result
+print(farming_type)
