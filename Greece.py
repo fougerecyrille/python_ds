@@ -43,7 +43,7 @@ for i, value in enumerate(df_area['Used agricultural area (ha)']):
 plt.xticks(rotation=45, ha='right')
 plt.show()
 
-"""3. Trying to get statistics on the main farming type by NUTS2 regions in Greece"""
+"""3. Drawing a pie chart on the main farming type by NUTS2 regions in Greece"""
 
 csv_file = '/Users/cyrillefougere/Desktop/ENSAE 2023:2024/S1/Python et Data Science/Databases/Greece_Type of farming.csv'
 
