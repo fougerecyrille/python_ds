@@ -51,3 +51,34 @@ for country in countries:
     plt.xlabel('Year')
     plt.ylabel('Percentage Change (Base 2012 = 100)')
     plt.show()
+
+# Choose a specific date (replace with the desired date)
+specific_date = 2020
+
+# Filter data for the specific date
+specific_date_data = or_farming[or_farming['time_period'] == specific_date]
+
+# Extract unique countries
+countries = specific_date_data['geo'].unique()
+
+# Create a pie chart for each country
+for country in countries:
+    country_data = specific_date_data[specific_date_data['geo'] == country]
+
+    # Extract crops and corresponding areas
+    crops = country_data['crops'].unique()
+    areas = country_data.groupby('crops')['obs_value'].sum()
+
+    # Aggregate crops accounting for less than 1%
+    threshold = 0.01
+    areas_aggregated = areas.copy()
+    small_crops = areas_aggregated[areas_aggregated / areas_aggregated.sum() < threshold]
+    other_crops_area = small_crops.sum()
+    areas_aggregated = areas_aggregated[~areas_aggregated.index.isin(small_crops.index)]
+    areas_aggregated['Other crops'] = other_crops_area
+
+    # Create a pie chart
+    plt.figure(figsize=(8, 8))
+    plt.pie(areas_aggregated, labels=areas_aggregated.index, autopct='%1.1f%%', startangle=90, colors=plt.cm.Paired.colors)
+    plt.title(f'Organic Farming Repartition by Crops in {country} ({specific_date})')
+    plt.show()
