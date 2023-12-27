@@ -37,40 +37,41 @@ dtld_nomenclature : {
     "R9000" : "Other root crops n.e.c.",
     "I0000" : "Industrial crops",
     "I1100" : "Oilseeds",
-    "I1120"
-    "I1130"
-    "I1140"
-    "I1150"
-    "I1190"
-    "I2000"
-    "I3000"
-    "I4000"
-    "I5000"
-    "I6000_9000"
-    "G0000"
-    "G1000"
-    "G2000"
-    "G3000"
-    "V0000_S0000"
-    "V0000"
-    "V1000"
-    "V2000"
-    "V3000"
-    "V3100"
-    "V4000"
-    "V4100"
-    "V4210"
-    "V5000"
-    "V9000"
-    "S0000"
-    "ARA9"
-    "E0000"
-    "Q0000"
-    "J0000"
-    "PECR"
-    "H0000"
-    "F0000"
-    "F1000"
+    "I1110" : "Rape and turnip rape seeds",
+    "I1120" : "Sunflower seed",
+    "I1130" : "Soya",
+    "I1140" : "Linseed (oilflax)",
+    "I1150" : "Cotton seed",
+    "I1190" : "Other oilseed crops n.e.c.",
+    "I2000" : "Fibre crops",
+    "I3000" : "Tobacco",
+    "I4000" : "Hops",
+    "I5000" : "Aromatic, medicinal and culinary plants",
+    "I6000_9000" : "Other industrial crops including energy crops n.e.c.",
+    "G0000": "Plants harvested green from arable land",
+    "G1000" : "Temporary grasses and grazing",
+    "G2000" : "Leguminous plants harvested greens",
+    "G3000" : "Green maize",
+    "V0000_S0000" : "Fresh vegetables (including melons) and strawberries",
+    "V0000" : "Fresh vegetables (including melons)",
+    "V1000" : "Brassicas",
+    "V2000" : "Leafy and stalked vegetables (excluding brassicas)",
+    "V3000" : "Vegetables cultivated for fruit (including melons)",
+    "V3100" : "Tomatoes",
+    "V4000" : "Root, tuber and bulb vegetables",
+    "V4100" : "Carrots",
+    "V4210" : "Onions",
+    "V5000" : "Fresh pulses",
+    "V9000" : "Other fresh vegetables n.e.c."
+    "S0000" : "Strawberries",
+    "ARA9" : "Other arable land crops",
+    "E0000" : "Seeds and seedlings",
+    "Q0000" : "Fallow land",
+    "J0000" : "Permanent grassland",
+    "PECR" : "Permanent crops",
+    "H0000" : "Permanent crops for human consumption",
+    "F0000" : "Fruits, berries and nuts (excluding citrus fruits, grapes and strawberries)",
+    "F1000" : ""
     "F1100"
     "F1110"
     "F1120"
