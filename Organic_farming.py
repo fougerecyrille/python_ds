@@ -19,30 +19,80 @@ dtld_nomenclature : {
     "C1120" : "Durum wheat",
     "C1200" : "Rye and winter cereals mixture (maslin)",
     "C1300" : "Barley",
-    "C1400"
-    "C1500"
-    "C1600_1700_1900"
-    "C1600"
-    "C1700"
-    "C2000"
-    "P0000"
-    "P1100"
-    "P1200"
-    "P1300"
-    "P9100"
-    "P9200"
-    "R0000"
-    "R1000"
-    "R2000"
-    "R9000"
-    "I0000"
-    "I1100"
+    "C1400" : "Oats and spring cereal mixtures (mixed grain other tnan maslin)",
+    "C1500" : "Grain maize and corn-cob-mix",
+    "C1600_1700_1900" : "Other cereals (including triticale and sorghum)",
+    "C1600" : "Triticale",
+    "C1700" : "Sorghum",
+    "C2000" : "Rice",
+    "P0000" : "Dry pulses and protein crops for the production of grain (including seed and mixtures of cereals and...)", 
+    "P1100" : "Field peas",
+    "P1200" : "Broad and field beans",
+    "P1300" : "Sweet lupins",
+    "P9100" : "Lentils",
+    "P9200" : "Chick peas",
+    "R0000" : "Root crops",
+    "R1000" : "Potatoes (including seed potatoes)",
+    "R2000" : "Sugar beet (excluding seed)",
+    "R9000" : "Other root crops n.e.c.",
+    "I0000" : "Industrial crops",
+    "I1100" : "Oilseeds",
     "I1120"
     "I1130"
     "I1140"
     "I1150"
     "I1190"
-    
+    "I2000"
+    "I3000"
+    "I4000"
+    "I5000"
+    "I6000_9000"
+    "G0000"
+    "G1000"
+    "G2000"
+    "G3000"
+    "V0000_S0000"
+    "V0000"
+    "V1000"
+    "V2000"
+    "V3000"
+    "V3100"
+    "V4000"
+    "V4100"
+    "V4210"
+    "V5000"
+    "V9000"
+    "S0000"
+    "ARA9"
+    "E0000"
+    "Q0000"
+    "J0000"
+    "PECR"
+    "H0000"
+    "F0000"
+    "F1000"
+    "F1100"
+    "F1110"
+    "F1120"
+    "F1190"
+    "F1200"
+    "F1210"
+    "F1220"
+    "F1230"
+    "F1240"
+    "F1250"
+    "F1290"
+    "F2000"
+    "F3000"
+    "F4000"
+    "T0000"
+    "T1000"
+    "W1000"
+    "W1100"
+    "O1000"
+    "H9000"
+    "PECR9"
+    "U1000"
 }
 
 # Replace country codes with names
