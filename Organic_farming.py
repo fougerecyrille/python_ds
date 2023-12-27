@@ -14,7 +14,35 @@ dtld_nomenclature : {
     "UAAXK0000" : "Utilised agricultural area excluding kitchen gardens",
     "ARA" : "Arable land",
     "COOOO" : "Cereals for the production of grain (including seed)",
-    ""
+    "C1000" : "Cereals (excluding rice) for the production of grain (including seed)",
+    "C1100" : "Wheat and spelt",
+    "C1120" : "Durum wheat",
+    "C1200" : "Rye and winter cereals mixture (maslin)",
+    "C1300" : "Barley",
+    "C1400"
+    "C1500"
+    "C1600_1700_1900"
+    "C1600"
+    "C1700"
+    "C2000"
+    "P0000"
+    "P1100"
+    "P1200"
+    "P1300"
+    "P9100"
+    "P9200"
+    "R0000"
+    "R1000"
+    "R2000"
+    "R9000"
+    "I0000"
+    "I1100"
+    "I1120"
+    "I1130"
+    "I1140"
+    "I1150"
+    "I1190"
+    
 }
 
 # Replace country codes with names
