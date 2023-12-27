@@ -62,7 +62,7 @@ dtld_nomenclature : {
     "V4100" : "Carrots",
     "V4210" : "Onions",
     "V5000" : "Fresh pulses",
-    "V9000" : "Other fresh vegetables n.e.c."
+    "V9000" : "Other fresh vegetables n.e.c.",
     "S0000" : "Strawberries",
     "ARA9" : "Other arable land crops",
     "E0000" : "Seeds and seedlings",
@@ -71,29 +71,29 @@ dtld_nomenclature : {
     "PECR" : "Permanent crops",
     "H0000" : "Permanent crops for human consumption",
     "F0000" : "Fruits, berries and nuts (excluding citrus fruits, grapes and strawberries)",
-    "F1000" : ""
-    "F1100"
-    "F1110"
-    "F1120"
-    "F1190"
-    "F1200"
-    "F1210"
-    "F1220"
-    "F1230"
-    "F1240"
-    "F1250"
-    "F1290"
-    "F2000"
-    "F3000"
-    "F4000"
-    "T0000"
-    "T1000"
-    "W1000"
-    "W1100"
-    "O1000"
-    "H9000"
-    "PECR9"
-    "U1000"
+    "F1000" : "Fruits from temperate climate zones",
+    "F1100" : "Pome fruits",
+    "F1110" : "Apples",
+    "F1120" : "Pears",
+    "F1190" : "Other pome fruits n.e.c.",
+    "F1200" : "Stone fruits",
+    "F1210" : "Peaches",
+    "F1220" : "Nectarines",
+    "F1230" : "Apricots",
+    "F1240" : "Cherries",
+    "F1250" : "Plums",
+    "F1290" : "Other stone fruits n.e.c.",
+    "F2000": "Fruits from subtropical and tropical climate zones",
+    "F3000" : "Berries (excluding strawberries)",
+    "F4000" : "Nuts",
+    "T0000" : "Citrus fruits",
+    "T1000" : "Oranges",
+    "W1000" : "Grapes",
+    "W1100" : "Grapes for wines",
+    "O1000" : "Olives",
+    "H9000" : "Other permanent crops for human consumption n.e.c.",
+    "PECR9" : "Other permanent crops",
+    "U1000" : "Cultivated mushrooms"
 }
 
 # Replace country codes with names
