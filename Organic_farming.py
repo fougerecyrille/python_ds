@@ -37,3 +37,17 @@ for country in countries:
     plt.xlabel('Year')
     plt.ylabel('Total Organic Agricultural Area (ha)')
     plt.show()
+    
+    # Calculate the percentage change relative to the base 100 index (2012)
+    base_year_value = total_values.loc[total_values['time_period'] == 2012, 'obs_value'].values[0]
+    percentage_change = (total_values['obs_value'] / base_year_value - 1) * 100
+    
+    plt.figure(figsize=(10, 5))
+    
+    # Plot the dot chart
+    plt.plot(total_values['time_period'], percentage_change, marker='o', linestyle='-', color='b')
+    
+    plt.title(f'Progression of Organic Farming in {country} (Relative to 2012)')
+    plt.xlabel('Year')
+    plt.ylabel('Percentage Change (Base 2012 = 100)')
+    plt.show()
