@@ -10,12 +10,13 @@ print(or_farming.sample(25))
 or_farming.columns = or_farming.columns.str.lower()
 
 # Replace cultures and crops names with others 
-dtld_nomenclature : {
+dtld_nomenclature = {
     "UAAXK0000" : "Utilised agricultural area excluding kitchen gardens",
     "ARA" : "Arable land",
-    "COOOO" : "Cereals for the production of grain (including seed)",
+    "C0000" : "Cereals for the production of grain (including seed)",
     "C1000" : "Cereals (excluding rice) for the production of grain (including seed)",
     "C1100" : "Wheat and spelt",
+    "C1110" : "Common wheat and spelt",
     "C1120" : "Durum wheat",
     "C1200" : "Rye and winter cereals mixture (maslin)",
     "C1300" : "Barley",
@@ -95,6 +96,7 @@ dtld_nomenclature : {
     "PECR9" : "Other permanent crops",
     "U1000" : "Cultivated mushrooms"
 }
+or_farming['crops'] = or_farming["crops"].replace(dtld_nomenclature)
 
 # Replace country codes with names
 or_farming['geo'] = or_farming['geo'].replace({'IT': 'Italy', 'EL': 'Greece', 'ES': 'Spain', 'FR': 'France', 'DE': 'Germany'})
@@ -141,7 +143,7 @@ for country in countries:
     plt.show()
 
 # Choose a specific date (replace with the desired date)
-specific_date = 2020
+specific_date = 2018
 
 # Filter data for the specific date
 specific_date_data = or_farming[or_farming['time_period'] == specific_date]
