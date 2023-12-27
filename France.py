@@ -1,45 +1,40 @@
-""" 0. Import des modules utilisés (pandas pour le traitement stat, matplotlib pour les graphiques)"""
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-#j'ai installé openpyxl par la commande pip install openpyxl (pcq vscode)
+import pynsee.download
 
-""" 1. Accès aux données et lecture """
-chemin_acces = "/home/onyxia/work/ef_kvaareg__custom_9130147_spreadsheet.xlsx"
-ttl_hold_nb = "Sheet 1"  # Nombre total d'exploitations par région française
-df_hold = pd.read_excel(chemin_acces, sheet_name=ttl_hold_nb, engine='openpyxl')
+"""1. Drawing a pie chart illustrating the geographic repartition of the agricultural holdings in France,
+by number of holdings and European NUTS2 regions"""
 
-""" 2. Tracer un pie chart """
+excel_file_path = "/Users/cyrillefougere/Desktop/ENSAE 2023:2024/S1/Python et Data Science/Databases/Key farm indicators_France_NUTS2.xlsx"
+ttl_hold_nb = "Sheet 1"  
+df_hold = pd.read_excel(excel_file_path, sheet_name=ttl_hold_nb, engine='openpyxl')
 
-"""2.1 apparemment j'ai des problèmes de NaN donc réglons-les"""
-# Afficher les lignes avec des valeurs NaN dans la colonne 'Number of holdings'
-nan_rows = df_hold[df_hold['Number of holdings'].isna()]
-print(df_hold['Number of holdings'].dtype)
-print(nan_rows)
+# Replacing '(NUTS 2010)' and '(NUTS 2013)' with an empty string in 'Geographic indication'
+df_hold['Geographic indication'] = df_hold['Geographic indication'].str.replace(' (NUTS 2010)', '')
+df_hold['Geographic indication'] = df_hold['Geographic indication'].str.replace(' (NUTS 2013)', '')
+#print(df_hold)
 
-#conversion de la colonne number of holdings en numériques
-df_hold['Number of holdings'] = pd.to_numeric(df_hold['Number of holdings'], errors='coerce')
-print(df_hold.head(3))
-#j'ai compris!!! c'est parce que j'ai des lignes vides au début!
-df_hold = df_hold.dropna(subset=['Number of holdings'])
-
-print(df_hold.head(3))
-
-"""2.2 code de construction du graphique"""
+# Drawing a pie chart according to these data
 labels = df_hold['Geographic indication']
 sizes = df_hold['Number of holdings']
 plt.pie(sizes, labels=labels, autopct='%1.1f%%')
 plt.title('Geographic Repartition of the Agricultural Holdings in France')
 plt.show()
 
+"""2. Drawing a bar chart illustrating the total used agricultural area in France, by ha. and European NUTS2 regions"""
 
-
-"""3. Drawing a bar chart illustrating the total used agricultural area in France, by ha. 
-and European NUTS2 regions"""
-
-excel_file_path = "/home/onyxia/work/ef_kvaareg__custom_9130147_spreadsheet.xlsx"
-ttl_area_ha = "Sheet 4"  
+excel_file_path = "/Users/cyrillefougere/Desktop/ENSAE 2023:2024/S1/Python et Data Science/Databases/Key farm indicators_France_NUTS2.xlsx"
+ttl_area_ha = "Sheet 2"  
 df_area = pd.read_excel(excel_file_path, sheet_name=ttl_area_ha, engine='openpyxl')
+
+# Replacing '(NUTS 2010)' and '(NUTS 2013)' with an empty string in 'Geographic indication'
+df_area['Geographic indication'] = df_area['Geographic indication'].str.replace(' (NUTS 2010)', '')
+df_area['Geographic indication'] = df_area['Geographic indication'].str.replace(' (NUTS 2013)', '')
+#print(df_hold)
+
+#Trying a descending order ranking for better understanding of the following bar chart
+df_area = df_area.sort_values(by='Used agricultural area (ha)', ascending=False)
 
 # Drawing a bar chart according to these data
 plt.bar(df_area['Geographic indication'],df_area['Used agricultural area (ha)'])
@@ -53,12 +48,17 @@ for i, value in enumerate(df_area['Used agricultural area (ha)']):
 plt.xticks(rotation=45, ha='right')
 plt.show()
 
-"""4. Drawing a bar chart illustrating the standard economic output, 
-in euros, of agriculture, of every french region"""
+"""3. Drawing a bar chart illustrating the standard economic output, 
+in euros, of agriculture, of every French region"""
 
-excel_file_path = "/home/onyxia/work/ef_kvaareg__custom_9130147_spreadsheet.xlsx"
-econ_output = "Sheet 7"  
+excel_file_path = "/Users/cyrillefougere/Desktop/ENSAE 2023:2024/S1/Python et Data Science/Databases/Key farm indicators_France_NUTS2.xlsx"
+econ_output = "Sheet 5"  
 df_output = pd.read_excel(excel_file_path, sheet_name=econ_output, engine='openpyxl')
+
+# Replacing '(NUTS 2010)' and '(NUTS 2013)' with an empty string in 'Geographic indication'
+df_output['Geographic indication'] = df_output['Geographic indication'].str.replace(' (NUTS 2010)', '')
+df_output['Geographic indication'] = df_output['Geographic indication'].str.replace(' (NUTS 2013)', '')
+print(df_output)
 
 #Trying a descending order ranking for better understanding of the following bar chart
 df_output = df_output.sort_values(by='Standard output (euros)', ascending=False)
@@ -75,9 +75,9 @@ for i, value in enumerate(df_output['Standard output (euros)']):
     plt.text(i, value + 10000, '{:.2e}'.format(value), ha='center', va='bottom', rotation=90)
 plt.show()
 
-"""5. Drawing a pie chart on the main farming type by NUTS2 regions in France"""
+"""4. Drawing a pie chart on the main farming type by NUTS2 regions in France"""
 
-csv_file = '/home/onyxia/work/ef_kvftreg__custom_9131585_linear.csv'
+csv_file = '/Users/cyrillefougere/Desktop/ENSAE 2023:2024/S1/Python et Data Science/Databases/France_Type of farming.csv'
 
 # Read the CSV file into a pandas DataFrame
 farming_type = pd.read_csv(csv_file)
