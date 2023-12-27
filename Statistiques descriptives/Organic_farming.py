@@ -20,7 +20,7 @@ dtld_nomenclature = {
     "C1120" : "Durum wheat",
     "C1200" : "Rye and winter cereals mixture (maslin)",
     "C1300" : "Barley",
-    "C1400" : "Oats and spring cereal mixtures (mixed grain other tnan maslin)",
+    "C1400" : "Oats and spring cereal mixtures (mixed grain other than maslin)",
     "C1500" : "Grain maize and corn-cob-mix",
     "C1600_1700_1900" : "Other cereals (including triticale and sorghum)",
     "C1600" : "Triticale",
