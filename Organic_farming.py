@@ -4,9 +4,18 @@ import matplotlib.pyplot as plt
 
 # Load your CSV data into a DataFrame
 or_farming = pd.read_csv('/Users/cyrillefougere/Desktop/ENSAE 2023:2024/S1/Python et Data Science/Databases/Organic farming_G5_ha.csv')
+print(or_farming.sample(25))
 
 # Convert column names to lower case for case-insensitivity 
 or_farming.columns = or_farming.columns.str.lower()
+
+# Replace cultures and crops names with others 
+dtld_nomenclature : {
+    "UAAXK0000" : "Utilised agricultural area excluding kitchen gardens",
+    "ARA" : "Arable land",
+    "COOOO" : "Cereals for the production of grain (including seed)",
+    ""
+}
 
 # Replace country codes with names
 or_farming['geo'] = or_farming['geo'].replace({'IT': 'Italy', 'EL': 'Greece', 'ES': 'Spain', 'FR': 'France', 'DE': 'Germany'})
