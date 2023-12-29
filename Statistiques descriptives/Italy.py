@@ -35,11 +35,15 @@ plt.bar(df_area['Geographic indication'],df_area['Used agricultural area (ha)'],
 plt.xlabel('Geographic indication')
 plt.ylabel('Used agricultural area (ha)')
 plt.title('Used Agricultural Area in Italy by NUTS2 Regions')
-
-#Trying the scientific notation to make it easier to read the bar chart
-for i, value in enumerate(df_area['Used agricultural area (ha)']):
-    plt.text(i, value + 10000, '{:.2e}'.format(value), ha='center', va='top', rotation=90, color = "white")
 plt.xticks(rotation=45, ha='right')
+
+# Trying the scientific notation to make it easier to read the bar chart
+for i, value in enumerate(df_area['Used agricultural area (ha)']):
+    if i < len(df_area) // 2:
+        plt.text(i, value + 10000, '{:.2e}'.format(value), ha='center', va='top', rotation=90, color="white")
+    else:
+        plt.text(i, value - 10000, '{:.2e}'.format(value), ha='center', va='bottom', rotation=90)
+
 plt.show()
 
 """3. Drawing a bar chart illustrating the standard economic output, 
@@ -59,9 +63,13 @@ plt.ylabel('Standard output (euros)')
 plt.title('Standard Agricultural economic output by NUTS2 Regions')
 plt.xticks(rotation=45, ha='right')
 
-#Trying the scientific notation to make it easier to read the bar chart
+# Trying the scientific notation to make it easier to read the bar chart
 for i, value in enumerate(df_output['Standard output (euros)']):
-    plt.text(i, value + 10000, '{:.2e}'.format(value), ha='center', va='top', rotation=90, color = "white")
+    if i < len(df_output) // 2:
+        plt.text(i, value + 10000, '{:.2e}'.format(value), ha='center', va='top', rotation=90, color="white")
+    else:
+        plt.text(i, value - 10000, '{:.2e}'.format(value), ha='center', va='bottom', rotation=90)
+
 plt.show()
 
 """4. Drawing a pie chart on the main farming type by NUTS2 regions in Italy"""
