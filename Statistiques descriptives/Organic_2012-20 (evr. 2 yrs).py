@@ -115,12 +115,12 @@ for country in countries:
     plt.figure(figsize=(10, 5))
     
     # Plot the bar chart
-    bars = plt.bar(total_values['time_period'], total_values['obs_value'])
+    bars = plt.bar(total_values['time_period'], total_values['obs_value'], color = 'g', width = 0.8)
     
     # Add values at the top of the bars
     for bar in bars:
         yval = bar.get_height()
-        plt.text(bar.get_x() + bar.get_width() / 2, yval, f'{yval:.2e}', ha='center', va='bottom', rotation=90)
+        plt.text(bar.get_x() + bar.get_width() / 2, yval, f'{yval:.2e}', ha='center', va='top', rotation=90, color = "white")
     
     plt.title(f'Total Organic Agricultural Area in {country}')
     plt.xlabel('Year')
@@ -138,7 +138,7 @@ for country in countries:
     plt.figure(figsize=(10, 5))
     
     # Plot the dot chart
-    plt.plot(total_values['time_period'], percentage_change, marker='o', linestyle='-', color='b')
+    plt.plot(total_values['time_period'], percentage_change, marker='o', linestyle='-', color='g')
     
     plt.title(f'Progression of Organic Farming in {country} (Relative to 2012)')
     plt.xlabel('Year')
