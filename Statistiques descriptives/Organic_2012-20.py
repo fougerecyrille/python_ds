@@ -106,7 +106,6 @@ countries = or_farming['geo'].unique()
 years = or_farming['time_period'].unique()
 
 # Bar charts for the evolution of total agricultural area with organic methods
-
 for country in countries:
     country_data = or_farming[or_farming['geo'] == country]
     
@@ -126,6 +125,10 @@ for country in countries:
     plt.title(f'Total Organic Agricultural Area in {country}')
     plt.xlabel('Year')
     plt.ylabel('Total Organic Agricultural Area (ha)')
+    
+    # Adjust layout to avoid overlapping with title
+    plt.tight_layout()
+    
     plt.show()
     
     # Calculate the percentage change relative to the base 100 index (2012)
@@ -140,6 +143,10 @@ for country in countries:
     plt.title(f'Progression of Organic Farming in {country} (Relative to 2012)')
     plt.xlabel('Year')
     plt.ylabel('Percentage Change (Base 2012 = 100)')
+    
+    # Adjust layout to avoid overlapping with title
+    plt.tight_layout()
+    
     plt.show()
 
 # Choose a specific date (replace with the desired date)
