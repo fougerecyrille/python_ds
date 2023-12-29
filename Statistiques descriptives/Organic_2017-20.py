@@ -1,9 +1,19 @@
+"""Attention, si le code s'exécute correctement, il y a fort à parier que 
+le très fort recul de la surface agricole cultivée en agriculture biologique, 
+ou en voie de conversion vers l'agriculture biologique, accusé par la plupart des pays en 
+2021, soit lié à un problème de remontée des données. Il est très probable que les 
+données soient incomplètes pour les années suivant 2020, d'où cette forte chute apparente 
+de la surface agricole cultivée en agriculture biologique en 2021, celle-ci étant calculée par aggrégation
+des surfaces mises en culture selon cette méthode de production pour chacun des types de culture 
+existant au sein de l'Union européenne. On choisit donc une nouvelle base de données pour travailler, 
+qui restreint la période de compilation des données à l'intervalle de temps 2017-2020."""
+
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
 # Load your CSV data into a DataFrame
-or_farming = pd.read_csv('/Users/cyrillefougere/Desktop/ENSAE 2023:2024/S1/Python et Data Science/Databases/Organic farming_G5_ha.csv')
+or_farming = pd.read_csv('/Users/cyrillefougere/Desktop/ENSAE 2023:2024/S1/Python et Data Science/Databases/Organic farming_G5_ha_2017:20.csv')
 print(or_farming.sample(25))
 
 # Convert column names to lower case for case-insensitivity 
@@ -128,8 +138,8 @@ for country in countries:
     plt.ylabel('Total Organic Agricultural Area (ha)')
     plt.show()
     
-    # Calculate the percentage change relative to the base 100 index (2012)
-    base_year_value = total_values.loc[total_values['time_period'] == 2012, 'obs_value'].values[0]
+    # Calculate the percentage change relative to the base 100 index (2017)
+    base_year_value = total_values.loc[total_values['time_period'] == 2017, 'obs_value'].values[0]
     percentage_change = (total_values['obs_value'] / base_year_value - 1) * 100
     
     plt.figure(figsize=(10, 5))
@@ -137,13 +147,13 @@ for country in countries:
     # Plot the dot chart
     plt.plot(total_values['time_period'], percentage_change, marker='o', linestyle='-', color='b')
     
-    plt.title(f'Progression of Organic Farming in {country} (Relative to 2012)')
+    plt.title(f'Progression of Organic Farming in {country} (Relative to 2017)')
     plt.xlabel('Year')
-    plt.ylabel('Percentage Change (Base 2012 = 100)')
+    plt.ylabel('Percentage Change (Base 2017 = 100)')
     plt.show()
 
 # Choose a specific date (replace with the desired date)
-specific_date = 2018
+specific_date = 2017
 
 # Filter data for the specific date
 specific_date_data = or_farming[or_farming['time_period'] == specific_date]
