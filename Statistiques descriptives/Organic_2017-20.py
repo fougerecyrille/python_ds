@@ -189,6 +189,9 @@ for country in countries:
     areas_aggregated = areas_aggregated[~areas_aggregated.index.isin(small_crops.index)]
     areas_aggregated['Other crops'] = other_crops_area
 
+    # Sort crops based on areas in descending order
+    areas_aggregated = areas_aggregated.sort_values(ascending=False)
+
     # Create a pie chart
     plt.figure(figsize=(8, 8))
     plt.pie(areas_aggregated, labels=areas_aggregated.index, autopct='%1.1f%%', startangle=90, colors=plt.cm.Paired.colors)
