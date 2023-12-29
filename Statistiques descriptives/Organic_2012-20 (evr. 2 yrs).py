@@ -162,6 +162,10 @@ countries = specific_date_data['geo'].unique()
 for country in countries:
     country_data = specific_date_data[specific_date_data['geo'] == country]
 
+    # Exclude "Utilised agricultural area excluding kitchen gardens" and "Arable land"
+    country_data = country_data[country_data['crops'] != "Utilised agricultural area excluding kitchen gardens"]
+    country_data = country_data[country_data['crops'] != "Arable land"]
+
     # Extract crops and corresponding areas
     crops = country_data['crops'].unique()
     areas = country_data.groupby('crops')['obs_value'].sum()
