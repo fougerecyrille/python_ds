@@ -126,18 +126,22 @@ for country in countries:
     plt.figure(figsize=(10, 5))
     
     # Plot the bar chart
-    bars = plt.bar(total_values['time_period'], total_values['obs_value'])
+    bars = plt.bar(total_values['time_period'], total_values['obs_value'], color = 'g', width = 0.5)
     
     # Add values at the top of the bars
     for bar in bars:
         yval = bar.get_height()
-        plt.text(bar.get_x() + bar.get_width() / 2, yval, f'{yval:.2e}', ha='center', va='bottom', rotation=90)
+        plt.text(bar.get_x() + bar.get_width() / 2, yval, f'{yval:.2e}', ha='center', va='top', rotation=90, color = "white")
     
     plt.title(f'Total Organic Agricultural Area in {country}')
     plt.xlabel('Year')
     plt.ylabel('Total Organic Agricultural Area (ha)')
-    plt.show()
     
+    # Adjust layout to avoid overlapping with title
+    plt.tight_layout()
+    
+    plt.show()
+
     # Calculate the percentage change relative to the base 100 index (2017)
     base_year_value = total_values.loc[total_values['time_period'] == 2017, 'obs_value'].values[0]
     percentage_change = (total_values['obs_value'] / base_year_value - 1) * 100
@@ -145,11 +149,15 @@ for country in countries:
     plt.figure(figsize=(10, 5))
     
     # Plot the dot chart
-    plt.plot(total_values['time_period'], percentage_change, marker='o', linestyle='-', color='b')
+    plt.plot(total_values['time_period'], percentage_change, marker='o', linestyle='-', color='g')
     
     plt.title(f'Progression of Organic Farming in {country} (Relative to 2017)')
     plt.xlabel('Year')
     plt.ylabel('Percentage Change (Base 2017 = 100)')
+    
+    # Adjust layout to avoid overlapping with title
+    plt.tight_layout()
+    
     plt.show()
 
 # Choose a specific date (replace with the desired date)
@@ -165,6 +173,10 @@ countries = specific_date_data['geo'].unique()
 for country in countries:
     country_data = specific_date_data[specific_date_data['geo'] == country]
 
+    # Exclude "Utilised agricultural area excluding kitchen gardens" and "Arable land"
+    country_data = country_data[country_data['crops'] != "Utilised agricultural area excluding kitchen gardens"]
+    country_data = country_data[country_data['crops'] != "Arable land"]
+
     # Extract crops and corresponding areas
     crops = country_data['crops'].unique()
     areas = country_data.groupby('crops')['obs_value'].sum()
@@ -176,6 +188,9 @@ for country in countries:
     other_crops_area = small_crops.sum()
     areas_aggregated = areas_aggregated[~areas_aggregated.index.isin(small_crops.index)]
     areas_aggregated['Other crops'] = other_crops_area
+
+    # Sort crops based on areas in descending order
+    areas_aggregated = areas_aggregated.sort_values(ascending=False)
 
     # Create a pie chart
     plt.figure(figsize=(8, 8))

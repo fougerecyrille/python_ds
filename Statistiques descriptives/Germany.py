@@ -17,6 +17,10 @@ df_hold=df_hold[df_hold["Geographic indication"] !=indentifying_value]
 # Drawing a pie chart according to these data
 labels = df_hold['Geographic indication']
 sizes = df_hold['Number of holdings']
+
+#Sorting regions of Spain based on the number of agricultural holdings in descending order
+sizes = sizes.sort_values(ascending=False)
+
 plt.pie(sizes, labels=labels, autopct='%1.1f%%')
 plt.title('Geographic Repartition of the Agricultural Holdings in Germany, by number of holdings and NUTS2 Region')
 plt.show()
@@ -35,14 +39,14 @@ df_area=df_area[df_area["Geographic indication"] !=indentifying_value]
 df_area=df_area.sort_values(by="Used agricultural area (ha)", ascending=False)
 
 # Drawing a bar chart according to these data
-plt.bar(df_area['Geographic indication'],df_area['Used agricultural area (ha)'])
+plt.bar(df_area['Geographic indication'],df_area['Used agricultural area (ha)'], color = "g")
 plt.xlabel('Geographic indication')
 plt.ylabel('Used agricultural area (ha)')
 plt.title('Used Agricultural Area in Germany by NUTS2 Regions')
 
 #Trying the scientific notation to make it easier to read the bar chart
 for i, value in enumerate(df_area['Used agricultural area (ha)']):
-    plt.text(i, value + 10000, '{:.2e}'.format(value), ha='center', va='bottom', rotation=90)
+    plt.text(i, value + 10000, '{:.2e}'.format(value), ha='center', va='top', rotation=90, color = "white")
 plt.xticks(rotation=45, ha='right')
 plt.show()
 
@@ -61,7 +65,7 @@ df_output=df_output[df_output["Geographic indication"] !=indentifying_value]
 df_output = df_output.sort_values(by='Standard output (euros)', ascending=False)
 
 #Drawing a bar chart according to these data
-plt.bar(df_output['Geographic indication'],df_output['Standard output (euros)'])
+plt.bar(df_output['Geographic indication'],df_output['Standard output (euros)'], color = "g")
 plt.xlabel('Geographic indication')
 plt.ylabel('Standard output (euros)')
 plt.title('Standard Agricultural economic output by NUTS2 Regions in Italy, in euros')
@@ -69,7 +73,7 @@ plt.xticks(rotation=45, ha='right')
 
 #Trying the scientific notation to make it easier to read the bar chart
 for i, value in enumerate(df_output['Standard output (euros)']):
-    plt.text(i, value + 10000, '{:.2e}'.format(value), ha='center', va='bottom', rotation=90)
+    plt.text(i, value + 10000, '{:.2e}'.format(value), ha='center', va='top', rotation=90, color = "white")
 plt.show()
 
 """4. Drawing a pie chart on the main farming type by NUTS2 regions in Italy"""
@@ -130,6 +134,9 @@ nomenclature_dic = {
 farming_type_unique = farming_type[['farmtype', 'all_nb_holdings']].drop_duplicates()
 farming_type_unique['farmtype'] = farming_type_unique['farmtype'].replace(nomenclature_dic)
 print(farming_type_unique)
+
+# Sort the types of farms based on the number of holdings in descending order
+farming_type_unique = farming_type_unique.sort_values(by='all_nb_holdings', ascending=False)
 
 # Draw the corresponding pie chart
 plt.figure(figsize=(8, 8))
