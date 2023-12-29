@@ -5,14 +5,15 @@ ou en voie de conversion vers l'agriculture biologique, accusé par la plupart d
 données soient incomplètes pour les années suivant 2020, d'où cette forte chute apparente 
 de la surface agricole cultivée en agriculture biologique en 2021, celle-ci étant calculée par aggrégation
 des surfaces mises en culture selon cette méthode de production pour chacun des types de culture 
-existant au sein de l'Union européenne."""
+existant au sein de l'Union européenne. On choisit donc une nouvelle base de données pour travailler, 
+qui restreint la période de compilation des données à l'intervalle de temps 2017-2020."""
 
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
 # Load your CSV data into a DataFrame
-or_farming = pd.read_csv('/Users/cyrillefougere/Desktop/ENSAE 2023:2024/S1/Python et Data Science/Databases/Organic farming_G5_ha_new dates.csv')
+or_farming = pd.read_csv('/Users/cyrillefougere/Desktop/ENSAE 2023:2024/S1/Python et Data Science/Databases/Organic farming_G5_ha_2017:20.csv')
 print(or_farming.sample(25))
 
 # Convert column names to lower case for case-insensitivity 
