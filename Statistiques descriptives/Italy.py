@@ -35,11 +35,15 @@ plt.bar(df_area['Geographic indication'],df_area['Used agricultural area (ha)'],
 plt.xlabel('Geographic indication')
 plt.ylabel('Used agricultural area (ha)')
 plt.title('Used Agricultural Area in Italy by NUTS2 Regions')
-
-#Trying the scientific notation to make it easier to read the bar chart
-for i, value in enumerate(df_area['Used agricultural area (ha)']):
-    plt.text(i, value + 10000, '{:.2e}'.format(value), ha='center', va='top', rotation=90, color = "white")
 plt.xticks(rotation=45, ha='right')
+
+# Trying the scientific notation to make it easier to read the bar chart
+for i, value in enumerate(df_area['Used agricultural area (ha)']):
+    if i < len(df_area) // 2:
+        plt.text(i, value + 10000, '{:.2e}'.format(value), ha='center', va='top', rotation=90, color="white")
+    else:
+        plt.text(i, value - 10000, '{:.2e}'.format(value), ha='center', va='bottom', rotation=90)
+
 plt.show()
 
 """3. Drawing a bar chart illustrating the standard economic output, 
@@ -59,9 +63,13 @@ plt.ylabel('Standard output (euros)')
 plt.title('Standard Agricultural economic output by NUTS2 Regions')
 plt.xticks(rotation=45, ha='right')
 
-#Trying the scientific notation to make it easier to read the bar chart
+# Trying the scientific notation to make it easier to read the bar chart
 for i, value in enumerate(df_output['Standard output (euros)']):
-    plt.text(i, value + 10000, '{:.2e}'.format(value), ha='center', va='top', rotation=90, color = "white")
+    if i < len(df_output) // 2:
+        plt.text(i, value + 10000, '{:.2e}'.format(value), ha='center', va='top', rotation=90, color="white")
+    else:
+        plt.text(i, value - 10000, '{:.2e}'.format(value), ha='center', va='bottom', rotation=90)
+
 plt.show()
 
 """4. Drawing a pie chart on the main farming type by NUTS2 regions in Italy"""
@@ -71,30 +79,7 @@ csv_file = '/Users/cyrillefougere/Desktop/ENSAE 2023:2024/S1/Python et Data Scie
 # Read the CSV file into a pandas DataFrame
 farming_type = pd.read_csv(csv_file)
 
-# Display the first few rows of the DataFrame
-print(farming_type.head(50))
-
-# Get the number of types of farms in the dataset
-nb_types = farming_type['farmtype'].nunique()
-print("There were", nb_types, "different types of farms in Spain in 2010")
-
-# Get a list of strings containing the different values of farmtypes in this dataset
-diff_types = farming_type['farmtype'].unique().tolist()
-print("The different values of farm types according to the European nomenclature are:", diff_types)
-
-# Create a new column for each farm type and calculate the sum of OBS_VALUE for each TIME_PERIOD
-for farm_type in diff_types:
-    farming_type[f'nb_holdings_by_type_{farm_type}'] = farming_type.loc[farming_type['farmtype'] == farm_type].groupby('TIME_PERIOD')['OBS_VALUE'].transform('sum')
-
-# Concatenate all the new columns into a single column
-farming_type['all_nb_holdings'] = farming_type.apply(lambda row: row.filter(like='nb_holdings_by_type_').sum(), axis=1)
-
-# Drop the individual farm type columns
-farming_type.drop(columns=[f'nb_holdings_by_type_{farm_type}' for farm_type in diff_types], inplace=True)
-
-#print(farming_type.head(50))
-
-# Replace the 'farmtype' labels with new values using a dictionnary :
+# Create a dictionnary which will be later used to replace the abstract nomenclature with more descriptibe labels
 nomenclature_dic = {
     "FT15_SO" : "Specialist cereals, oilseed and protein crops",
     "FT16_SO" : "General field cropping",
@@ -119,15 +104,52 @@ nomenclature_dic = {
     "FT84_SO" : "Various crops and livestock combined",
     "FT90_SO" : "Non-classified farms"
 }
-farming_type_unique = farming_type[['farmtype', 'all_nb_holdings']].drop_duplicates()
-farming_type_unique['farmtype'] = farming_type_unique['farmtype'].replace(nomenclature_dic)
-print(farming_type_unique)
 
-# Sort the types of farms based on the number of holdings in descending order
-farming_type_unique = farming_type_unique.sort_values(by='all_nb_holdings', ascending=False)
+# Replace farmtype codes with descriptive names
+farming_type['farmtype'] = farming_type['farmtype'].replace(nomenclature_dic)
+
+# Sum the number of holdings for each farm type
+farming_type_summary = farming_type.groupby('farmtype')['OBS_VALUE'].sum().reset_index(name='Total Holdings')
+
+# Calculate the percentage of holdings for each farm type
+farming_type_summary['Percentage'] = farming_type_summary['Total Holdings'] / farming_type_summary['Total Holdings'].sum() * 100
+
+# Identify farm types with less than 1% of the total holdings
+small_farm_types = farming_type_summary[farming_type_summary['Percentage'] < 1.5]
+
+# Create a new DataFrame combining major types and "Other crops"
+major_types = farming_type_summary[farming_type_summary['Percentage'] >= 1.5]
+other_crops_row = pd.DataFrame({'farmtype': ['Other crops'], 'Total Holdings': [small_farm_types['Total Holdings'].sum()]})
+other_crops_row['Percentage'] = other_crops_row['Total Holdings'] / farming_type_summary['Total Holdings'].sum() * 100
+farming_type_combined = pd.concat([major_types, other_crops_row], ignore_index=True)
 
 # Draw the corresponding pie chart
 plt.figure(figsize=(8, 8))
-plt.pie(farming_type_unique['all_nb_holdings'], labels=farming_type_unique['farmtype'], autopct='%1.1f%%', startangle=90)
+
+# Set a custom color cycle with distinct colors for adjacent slices
+custom_colors = plt.cm.tab20c.colors  # You can use a different colormap if needed
+plt.gca().set_prop_cycle('color', custom_colors)
+
+# Draw the pie chart without labels for legend
+wedges, _, autotexts = plt.pie(
+    farming_type_combined['Total Holdings'],
+    labels=None,
+    autopct='%1.1f%%',  # Specify autopct to include percentages
+    startangle=90,
+    pctdistance=0.85,
+)
+
+# Extract percentages from autopct
+percentages = [float(autotext.get_text()[:-1]) for autotext in autotexts]
+
+# Draw the legend outside the plot area with labels and percentages
+legend_labels = [f'{label} ({percentage:.1f}%)' for label, percentage in zip(farming_type_combined['farmtype'], percentages)]
+legend = plt.legend(wedges, legend_labels, title='Farm Types', loc='center left', bbox_to_anchor=(1, 0, 0.5, 1))
+
+# Set the legend to display labels and percentages in a single column
+for label, percentage in zip(legend_labels, percentages):
+    legend.texts[legend_labels.index(label)].set_text(f'{label}\n{percentage:.1f}%')
+
 plt.title('Repartition of Farm Types in Italy')
+
 plt.show()
