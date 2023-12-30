@@ -20,7 +20,7 @@ print(df_hold_modified)
 labels = df_hold_modified['Geographic indication']
 sizes = df_hold_modified['Number of holdings']
 
-# Sorting regions of Spain based on the number of agricultural holdings in descending order
+# Sorting regions of Greece based on the number of agricultural holdings in descending order
 sizes = sizes.sort_values(ascending=False)
 
 plt.pie(sizes, labels=labels, autopct='%1.1f%%')
