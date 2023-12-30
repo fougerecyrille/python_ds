@@ -307,5 +307,5 @@ legend_labels = [f'{label} ({percentage:.1f}%)' for label, percentage in
 plt.legend(area_summary_filtered['farmtype'], title='Crop Types', bbox_to_anchor=(1, 0.5), loc='center left',
            labels=legend_labels)
 
-plt.title('Distribution of Used Agricultural Area by Farm Type')
+plt.title('Distribution of Used Agricultural Area by Farm Type, in Germany')
 plt.show()
