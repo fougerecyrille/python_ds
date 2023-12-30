@@ -170,8 +170,8 @@ for country in countries:
     crops = country_data['crops'].unique()
     areas = country_data.groupby('crops')['obs_value'].sum()
 
-    # Aggregate crops accounting for less than 1%
-    threshold = 0.01
+    # Aggregate crops accounting for less than 1.5%
+    threshold = 0.015
     areas_aggregated = areas.copy()
     small_crops = areas_aggregated[areas_aggregated / areas_aggregated.sum() < threshold]
     other_crops_area = small_crops.sum()
