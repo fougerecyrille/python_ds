@@ -157,9 +157,6 @@ plt.show()
 """5. Drawing a pie chart plotting the distribution of the used agricultural 
 area in Italy by farm types."""
 
-import pandas as pd
-import matplotlib.pyplot as plt
-
 csv_file = "/Users/cyrillefougere/Desktop/ENSAE 2023:2024/S1/Python et Data Science/Databases/Italy_Non-Organic_Types of crops_Used area (ha).csv"
 
 # Load the CSV file into a DataFrame
